@@ -1,8 +1,8 @@
-use crate::error::source::Error;
+use crate::error::source::SourceError;
+use crate::error::source::Result;
 use std::fs::read_to_string;
 use std::path::PathBuf;
 
-pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug)]
 pub enum Language {
@@ -22,18 +22,18 @@ fn get_language(file_path: &PathBuf) -> Result<Language> {
     let ext = file_path
         .extension()
         .and_then(|ext| ext.to_str())
-        .ok_or(Error::ReadExtension)?;
+        .ok_or(SourceError::ReadExtension)?;
     match ext {
         "py" => Ok(Language::Python),
         "go" => Ok(Language::Go),
         "rs" => Ok(Language::Rust),
         "cs" => Ok(Language::Csharp),
-        _ => Err(Error::ReadExtension),
+        _ => Err(SourceError::ReadExtension),
     }
 }
 
 pub fn read_file(file_path: &PathBuf) -> Result<File> {
     let language = get_language(file_path)?;
-    let text = read_to_string(file_path).map_err(|_| Error::ReadFile)?;
+    let text = read_to_string(file_path).map_err(|_| SourceError::ReadFile)?;
     Ok(File { text, language })
 }
