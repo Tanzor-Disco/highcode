@@ -1,8 +1,7 @@
-use crate::error::source::SourceError;
 use crate::error::source::Result;
+use crate::error::source::SourceError;
 use std::fs::read_to_string;
 use std::path::PathBuf;
-
 
 #[derive(Debug)]
 pub enum Language {

@@ -1,17 +1,20 @@
 mod cli;
 mod error;
-mod source;
-mod parser;
 mod highlighter;
+mod source;
 mod theme;
+mod tree;
 
 use cli::input::read_args;
-use source::read;
-use parser::parser::SourceParser;
+use highlighter::highlighter::Highlighter;
+use source::read::read_file;
+use tree::finder::finder::Finder;
+use tree::parser::parser::SourceParser;
 
 fn main() {
+    // reading cli arguments
     let args = read_args();
-    let file = match read::read_file(&args.file_path) {
+    let file = match read_file(&args.file_path) {
         Ok(val) => val,
         Err(err) => {
             println!("{}", err);
@@ -19,13 +22,41 @@ fn main() {
         }
     };
 
+    // parsing a file
     let mut source_parser = match SourceParser::new(&file) {
         Ok(val) => val,
         Err(err) => {
-            println!("{}",err);
+            println!("{}", err);
             return;
         }
     };
-    
-    println!("{:?}",source_parser.get_tree().unwrap().root_node().to_sexp());
+
+    let tree = match source_parser.get_tree() {
+        Ok(val) => val,
+        Err(err) => {
+            println!("couldn't get the tree: {}", err);
+            return;
+        }
+    };
+
+    // finding nodes in a file
+    let finder = match Finder::new(&file, &tree) {
+        Ok(val) => val,
+        Err(err) => {
+            println!("couldn't create finder: {}", err);
+            return;
+        }
+    };
+    let found_nodes = finder.find();
+
+    // setting up highlight for the found nodes
+    let highlighter = Highlighter::new(&found_nodes);
+    let highlight_elements = match highlighter.highlight() {
+        Ok(val) => val,
+        Err(err) => {
+            println!("couldn't highlight: {}", err);
+            return;
+        }
+    };
+    println!("{:?}", highlight_elements);
 }
