@@ -3,6 +3,8 @@ use tree_sitter::{Query, QueryCursor, QueryError, StreamingIterator, Tree};
 
 const GO_QUERY: &str = include_str!("queries/go.scm");
 const PYTHON_QUERY: &str = include_str!("queries/python.scm");
+const RUST_QUERY: &str = include_str!("queries/rust.scm");
+const CSHARP_QUERY: &str = include_str!("queries/csharp.scm");
 
 #[derive(Debug)]
 pub struct FoundNode {
@@ -22,13 +24,15 @@ impl<'a> Finder<'a> {
         let query_source = match file.language {
             Language::Go => GO_QUERY,
             Language::Python => PYTHON_QUERY,
-            //TODO: Add more languages scm
-            _ => GO_QUERY,
+            Language::Rust => RUST_QUERY,
+            Language::Csharp => CSHARP_QUERY,
         };
 
         let engine_language: tree_sitter::Language = match file.language {
             Language::Go => tree_sitter_go::LANGUAGE.into(),
-            _ => tree_sitter_go::LANGUAGE.into(), //TODO: add more languages
+            Language::Rust => tree_sitter_rust::LANGUAGE.into(),
+            Language::Python => tree_sitter_python::LANGUAGE.into(),
+            Language::Csharp => tree_sitter_python::LANGUAGE.into(),
         };
 
         let query = Query::new(&engine_language, query_source)?;

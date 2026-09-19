@@ -12,12 +12,17 @@ impl<'a> SourceParser<'a> {
     pub fn new(file: &'a File) -> Result<Self> {
         let mut engine = Parser::new();
         match file.language {
-            //TODO: Add other languages to match
             Language::Go => engine
                 .set_language(&tree_sitter_go::LANGUAGE.into())
                 .map_err(|_| ParserError::SetLanguage)?,
-            _ => engine
-                .set_language(&tree_sitter_go::LANGUAGE.into())
+            Language::Python => engine
+                .set_language(&tree_sitter_python::LANGUAGE.into())
+                .map_err(|_| ParserError::SetLanguage)?,
+            Language::Rust => engine
+                .set_language(&tree_sitter_rust::LANGUAGE.into())
+                .map_err(|_| ParserError::SetLanguage)?,
+            Language::Csharp => engine
+                .set_language(&tree_sitter_c_sharp::LANGUAGE.into())
                 .map_err(|_| ParserError::SetLanguage)?,
         }
 

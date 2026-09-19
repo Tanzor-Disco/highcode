@@ -2,7 +2,7 @@ use crate::error::highlighter::{HighlighterError, Result};
 use crate::tree::finder::finder::FoundNode;
 
 #[derive(Debug)]
-enum HighlightKind {
+pub enum HighlightKind {
     Keyword,
     Function,
     String_,
@@ -11,9 +11,9 @@ enum HighlightKind {
 
 #[derive(Debug)]
 pub struct HighlightElement {
-    start: usize,
-    end: usize,
-    kind: HighlightKind,
+    pub start: usize,
+    pub end: usize,
+    pub kind: HighlightKind,
 }
 
 pub struct Highlighter<'a> {

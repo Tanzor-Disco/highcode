@@ -1,12 +1,15 @@
 mod cli;
 mod error;
 mod highlighter;
+mod render;
 mod source;
 mod theme;
 mod tree;
 
 use cli::input::read_args;
+use cli::output::macos::copy_to_clipboard;
 use highlighter::highlighter::Highlighter;
+use render::html::render_html;
 use source::read::read_file;
 use tree::finder::finder::Finder;
 use tree::parser::parser::SourceParser;
@@ -21,6 +24,7 @@ fn main() {
             return;
         }
     };
+    let theme = theme::theme::get_theme(&args.theme);
 
     // parsing a file
     let mut source_parser = match SourceParser::new(&file) {
@@ -58,5 +62,9 @@ fn main() {
             return;
         }
     };
-    println!("{:?}", highlight_elements);
+
+    // rendering html
+    let render = render_html(&highlight_elements, &file.text, &theme);
+    copy_to_clipboard(&render, &file.text);
+    println!("Added code to clipboard");
 }
