@@ -1,6 +1,7 @@
 use crate::source::read::{File, Language};
 use tree_sitter::{Query, QueryCursor, QueryError, StreamingIterator, Tree};
 
+// Add a language
 const GO_QUERY: &str = include_str!("queries/go.scm");
 const PYTHON_QUERY: &str = include_str!("queries/python.scm");
 const RUST_QUERY: &str = include_str!("queries/rust.scm");
@@ -21,6 +22,7 @@ pub struct Finder<'a> {
 
 impl<'a> Finder<'a> {
     pub fn new(file: &'a File, tree: &'a Tree) -> Result<Self, QueryError> {
+        // Add a language
         let query_source = match file.language {
             Language::Go => GO_QUERY,
             Language::Python => PYTHON_QUERY,
@@ -28,11 +30,12 @@ impl<'a> Finder<'a> {
             Language::Csharp => CSHARP_QUERY,
         };
 
+        // Add a language
         let engine_language: tree_sitter::Language = match file.language {
             Language::Go => tree_sitter_go::LANGUAGE.into(),
             Language::Rust => tree_sitter_rust::LANGUAGE.into(),
             Language::Python => tree_sitter_python::LANGUAGE.into(),
-            Language::Csharp => tree_sitter_python::LANGUAGE.into(),
+            Language::Csharp => tree_sitter_c_sharp::LANGUAGE.into(),
         };
 
         let query = Query::new(&engine_language, query_source)?;

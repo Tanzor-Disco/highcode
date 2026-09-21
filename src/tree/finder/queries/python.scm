@@ -1,7 +1,6 @@
 [
   "and"
-  "as"
-  "assert"
+  "as" "assert"
   "async"
   "await"
   "break"

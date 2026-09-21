@@ -4,6 +4,8 @@ use std::fs::read_to_string;
 use std::path::PathBuf;
 
 #[derive(Debug)]
+
+// Add a language
 pub enum Language {
     Python,
     Go,
@@ -17,6 +19,7 @@ pub struct File {
     pub language: Language,
 }
 
+// Add a language
 fn get_language(file_path: &PathBuf) -> Result<Language> {
     let ext = file_path
         .extension()

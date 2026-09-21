@@ -24,7 +24,7 @@ pub struct Theme {
     pub main_text: ThemeColor,
 }
 
-const DEFAULT_THEME: Theme = Theme {
+const DARK_THEME: Theme = Theme {
     keyword: ThemeColor::new(255, 215, 0),
     function: ThemeColor::new(207, 214, 241),
     string: ThemeColor::new(140, 215, 83),
@@ -41,19 +41,10 @@ const LIGHT_THEME: Theme = Theme {
     background: ThemeColor::new(255, 255, 255),
     main_text: ThemeColor::new(36, 41, 47),
 };
-const VSCODE_THEME: Theme = Theme {
-    keyword: ThemeColor::new(86, 156, 214),
-    function: ThemeColor::new(220, 220, 170),
-    string: ThemeColor::new(206, 145, 120),
-    comment: ThemeColor::new(106, 153, 85),
-    background: ThemeColor::new(30, 30, 30),
-    main_text: ThemeColor::new(207, 214, 241),
-};
 
 pub fn get_theme(choice: &ThemeChoice) -> Theme {
     match choice {
-        ThemeChoice::Default => DEFAULT_THEME,
-        ThemeChoice::VSCode => VSCODE_THEME,
+        ThemeChoice::Dark => DARK_THEME,
         ThemeChoice::Light => LIGHT_THEME,
     }
 }

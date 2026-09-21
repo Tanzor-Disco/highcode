@@ -38,6 +38,7 @@ fn process_highlight(highlight: &HighlightElement, text: &str, theme: &Theme) ->
 pub fn render_html(highlights: &[HighlightElement], text: &str, theme: &Theme) -> String {
     let mut parts: Vec<String> = Vec::new();
 
+    // Creating the opening tags with basic styles
     let html_start = format!(
         "<pre style=\"background:{}; display: inline-block; padding:20px; min-width:500px;\"><code style=\"color:{}; font-family:consolas; font-size:15px\">",
         theme.background.to_css(),

@@ -11,6 +11,8 @@ pub struct SourceParser<'a> {
 impl<'a> SourceParser<'a> {
     pub fn new(file: &'a File) -> Result<Self> {
         let mut engine = Parser::new();
+
+        // Add a language
         match file.language {
             Language::Go => engine
                 .set_language(&tree_sitter_go::LANGUAGE.into())

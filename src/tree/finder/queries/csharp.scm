@@ -1,26 +1,15 @@
-[
-  [
-  "as"
-  "break"
-  "case"
-  "class"
-  "continue"
-  "else"
-  "finally"
-  "for"
-  "if"
-  "in"
-  "is"
-  "return"
-  "try"
-  "while"
-] @keyword] @keyword
-
-[
-  (raw_string_literal)
-] @string
+(modifier) @keyword
 
 (comment) @comment
 
+(string_literal) @string
+
 (method_declaration
   name: (identifier) @function)
+
+(invocation_expression
+  function: (identifier) @function)
+
+(invocation_expression
+  function: (member_access_expression
+    name: (identifier) @function))
