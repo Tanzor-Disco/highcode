@@ -63,6 +63,7 @@ fn main() {
         }
     };
 
+
     // rendering html
     let render = render_html(&highlight_elements, &file.text, &theme);
     copy_to_clipboard(&render, &file.text);
