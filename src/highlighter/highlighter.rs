@@ -7,6 +7,7 @@ pub enum HighlightKind {
     Function,
     String_,
     Comment,
+    Type,
 }
 
 #[derive(Debug)]
@@ -33,6 +34,7 @@ impl<'a> Highlighter<'a> {
                 "string" => HighlightKind::String_,
                 "comment" => HighlightKind::Comment,
                 "function" => HighlightKind::Function,
+                "type" => HighlightKind::Type,
                 _ => return Err(HighlighterError::UnknownCaptureName),
             };
 

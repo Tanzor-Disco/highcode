@@ -22,6 +22,7 @@ pub struct Theme {
     pub comment: ThemeColor,
     pub background: ThemeColor,
     pub main_text: ThemeColor,
+    pub type_: ThemeColor,
 }
 
 const DARK_THEME: Theme = Theme {
@@ -31,6 +32,7 @@ const DARK_THEME: Theme = Theme {
     comment: ThemeColor::new(209, 154, 102),
     background: ThemeColor::new(13, 17, 23),
     main_text: ThemeColor::new(207, 214, 241),
+    type_: ThemeColor::new(255, 215, 0),
 };
 
 const LIGHT_THEME: Theme = Theme {
@@ -40,6 +42,7 @@ const LIGHT_THEME: Theme = Theme {
     comment: ThemeColor::new(0, 128, 0),
     background: ThemeColor::new(255, 255, 255),
     main_text: ThemeColor::new(36, 41, 47),
+    type_: ThemeColor::new(175, 0, 219),
 };
 
 pub fn get_theme(choice: &ThemeChoice) -> Theme {
